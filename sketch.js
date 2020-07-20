@@ -6,7 +6,7 @@ var count = 0;
 var trunkLength = randomRange(100,120);
 var trunkColor = brownColorPalette();
 var branchWidth = randomRange(3,10);
-var startAngle = randomAngleDeg2Rad(20,60)
+var startAngle = randomAngleDeg2Rad(20,70)
 
 function setup() {
     createCanvas(window.innerWidth, innerHeight);
@@ -28,16 +28,20 @@ function mousePressed() {
     }   
     count ++;
 
-    if (count > 5) {
+    if (count > 1) {
         for (var i = 0; i < tree.length; i++) {
              if (!tree[i].finished) {
                 var leafColor = greenColorPalette();
                 var leafColor2 = greenColorPalette();
+                var leafColor3 = greenColorPalette();
+
                 var leaf = new Leaf(tree[i].end.x,tree[i].end.y,leafColor);
-                var leaf2 = new Leaf(tree[i].end.x+5,tree[i].end.y+5,leafColor2);
+                var leaf2 = new Leaf(tree[i].end.x+5,tree[i].end.y+2,leafColor2);
+                var leaf3 = new Leaf(tree[i].end.x-2,tree[i].end.y-5,leafColor3);
 
                 leaves.push(leaf);
                 leaves.push(leaf2);
+                leaves.push(leaf3);
             }
         } 
     }
@@ -52,9 +56,10 @@ function draw() {
     }
 
     for (var i = 0; i < leaves.length; i++) {
-        leaves[i].show();                  
+        leaves[i].show();   
+
     }
-    
+     
 }
     
     
