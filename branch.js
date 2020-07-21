@@ -7,34 +7,27 @@ function Branch(begin, end, color, branchWidth, angle) {
     this.finished = false;
     this.length = end - begin;
     this.angle = angle;
+    this.direction;
 
     this.show = function() {
         stroke(color);
         strokeWeight(branchWidth);
         // strokeCap(ROUND);
-       
+        noFill();
         line(this.begin.x, this.begin.y, this.end.x, this.end.y);
-        // beginShape();
-        // noFill();
-        // curveVertex(this.begin.x, this.begin.y);
-        // curveVertex(this.begin.x, this.begin.y);
-        // curveVertex(this.begin.x, this.begin.y - 40 );
-        // curveVertex(this.end.x, this.end.y);
-        // curveVertex(this.end.x, this.end.y);
-        // endShape();
-        // curve(this.begin.x ,this.begin.x, this.begin.y, this.end.x, this.end.y, this.end.y);
-
+        
     };
 
     // Create two additional branch objects
     this.branch = function(direction) {
+        this.direction  = direction;
         var dir = p5.Vector.sub(this.end, this.begin);
         angleVarL = randomRange(-0.1,0.9);
         angleVarR = randomRange(-0.1,0.9);
         // Rotate
-        if (direction === "left"){
+        if (this.direction === "left"){
             dir.rotate(this.angle );
-        } else if (direction === "right") {
+        } else if (this.direction === "right") {
             dir.rotate( - this.angle );
         }
         // Shorthen branch length
@@ -52,7 +45,13 @@ function Branch(begin, end, color, branchWidth, angle) {
 
     };
 
+    // this.update = function() {
+        // 
+    // }
+
 }
+
+
 
 // Leaf class
 function Leaf(x, y, color) {
