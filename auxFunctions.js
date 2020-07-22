@@ -6,7 +6,7 @@ function randomRange(min, max) {
 // Input: range on angles in degrees
 // Output random angle in radians
 function randomAngleDeg2Rad(min, max) {
-    return randomRange(min, max) * Math.PI / 180
+    return randomRange(min, max) * Math.PI / 180;
 }
 //  Returns random color from brown palette
 

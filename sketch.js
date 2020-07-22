@@ -1,9 +1,11 @@
 
+p5.disableFriendlyErrors = true;
+// ----- Tree variablaes ----
 // tree: an array of branches
 var tree;
 var leaves = [];
 var count = 0;
-var trunkLength = randomRange(100,120);
+var trunkLength = randomRange(50,200);
 var trunkColor = brownColorPalette();
 var trunkhWidth = randomRange(3,10);
 var trunkAngle = 90 * Math.PI / 180;
@@ -47,13 +49,3 @@ function draw() {
      
 }
     
-    
-    
-    
-    
-    
-    
-    
-   
-
-  
