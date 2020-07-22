@@ -1,74 +1,119 @@
 
 // Leaf class
-// A beginning and an end point, displayed as a line joinning them
-function Branch(begin, end, color, branchWidth, angle) {
-    this.begin = begin;
-    this.end = end;
-    this.finished = false;
-    this.length = end - begin;
-    this.angle = angle;
+// Each branch is defined by the formulas: x =  begin.x + branchLength * cos(angle), y = begin.y + branchLength * sin(angle)
+class Branch{
 
-    this.show = function() {
-        stroke(color);
-        strokeWeight(branchWidth);
-        // strokeCap(ROUND);
-       
+    constructor(begin, branchLength, angle, color, branchWidth, parent, fractalLevel) {
+        // Starting point of the branch
+        this.begin = begin;
+        // Lenght of the branch
+        this.branchLength = branchLength;
+        // Angle of the branch
+        this.angle = angle;
+        this.color = color;
+        this.branchWidth = branchWidth;
+        this.parent = parent;
+        this.fractalLevel = fractalLevel;
+        // End point (calculated with the begin point, the branchLength and the angle)
+        this.end = createVector(this.begin.x + this.branchLength * cos(this.angle), this.begin.y - this.branchLength * sin(this.angle));
+        
+   
+    }
+    
+    show() {
+        stroke(this.color);
+        strokeWeight(this.branchWidth);
         line(this.begin.x, this.begin.y, this.end.x, this.end.y);
-        // beginShape();
-        // noFill();
-        // curveVertex(this.begin.x, this.begin.y);
-        // curveVertex(this.begin.x, this.begin.y);
-        // curveVertex(this.begin.x, this.begin.y - 40 );
-        // curveVertex(this.end.x, this.end.y);
-        // curveVertex(this.end.x, this.end.y);
-        // endShape();
-        // curve(this.begin.x ,this.begin.x, this.begin.y, this.end.x, this.end.y, this.end.y);
+    }
 
-    };
+    // Grow branch objects
+    grow(direction, angleVar) {
+        
+        this.direction = direction;
+        var angleVarL = randomAngleDeg2Rad(-20,20);
+        var angleVarR = randomAngleDeg2Rad(-20,20);
 
-    // Create two additional branch objects
-    this.branch = function(direction) {
-        var dir = p5.Vector.sub(this.end, this.begin);
-        angleVarL = randomRange(-0.1,0.9);
-        angleVarR = randomRange(-0.1,0.9);
         // Rotate
-        if (direction === "left"){
-            dir.rotate(this.angle );
-        } else if (direction === "right") {
-            dir.rotate( - this.angle );
+        if (this.direction === "left"){
+            var newAngle = this.angle + angleVar + angleVarL 
+            // var newIdentifier =   this.identifier + 1;
+        } else if (this.direction === "right") {
+            var newAngle = this.angle - angleVar + angleVarR 
+            // var newIdentifier =   this.identifier + 2;
         }
         // Shorthen branch length
-        dir.mult(0.8);
-        // Change angle randomly
+        var newLength = this.branchLength * 0.8;
 
         // Decrease width in every branch
-        var newWidth = branchWidth * 0.65;
-        // var newWidth = branchWidth;
-        var newEnd = p5.Vector.add(this.end, dir);
+        var newWidth = this.branchWidth * 0.65;
         
+        // Nest parent is the actual branch
+        // newParent = this.identifier; 
+
         // New branch will start at the beginning of the old branch
-        var newBranch = new Branch(this.end, newEnd, color, newWidth, angle);
+        var newBranch = new Branch(this.end, newLength, newAngle, this.color, newWidth, this);
         return newBranch;
 
     };
 
-}
+    branch(limit, level = 0) {
+        let branches = [];
+        this.level = level;
+        
+        if (limit <= level) {
+            return branches;
+        }
+        var angleVar= randomAngleDeg2Rad(10, 50);
+        let left  = this.grow("left", angleVar);
+        let right = this.grow("right", angleVar);
+        
+        left.direction = "left";
+        right.direction = "right";
 
-// Leaf class
-function Leaf(x, y, color) {
-    this.x = x;
-    this.y = y;
-    this.color = color;
+        branches.push(left, right);
+        left.branch(limit, level + 1)
+        right.branch(limit, level + 1)
 
-    this.show = function() {
-        noStroke();
-        fill(color);
-        arc(this.x, this.y, 5, 10, 0 + 5, PI +5 );
+        this.branches = branches;
 
-        // strokeCap(ROUND);
-        curveTightness(-0.2);
-        // strokeWeight(2);
-        // noStroke();
-        // fill(0);
     }
+
+    // Run funcitons for each element in the array
+    run(callback) {
+        callback(this);
+        if(this.branches && this.branches.length) {
+          this.branches.forEach(branch => branch.run(callback));
+        }
+    }
+    
+
+    updateStartPoints() {
+        if(this.parent) {
+            this.begin.x = this.parent.end.x;
+            this.begin.y = this.parent.end.y;
+        }
+        
+        
+    };
+
+    updateBranchLength() {
+        this.updateStartPoints();
+        this.branchLength = lengthSlider.value();
+        this.end = createVector(this.begin.x + this.branchLength * cos(this.angle), this.begin.y - this.branchLength * sin(this.angle));
+        
+    }
+
+
+    updateBranchAngle() {
+        this.updateStartPoints();
+        if (this.direction === "left") {
+            this.angle = this.parent.angle + angleSlider.value();
+        }
+        if (this.direction === "right") {
+            this.angle = this.parent.angle - angleSlider.value();
+        }
+        this.end = createVector(this.begin.x + this.branchLength * cos(this.angle), this.begin.y - this.branchLength * sin(this.angle));
+    }
+
 }
+
