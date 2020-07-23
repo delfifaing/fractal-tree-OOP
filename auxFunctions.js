@@ -9,7 +9,6 @@ function randomAngleDeg2Rad(min, max) {
     return randomRange(min, max) * Math.PI / 180;
 }
 //  Returns random color from brown palette
-
 function brownColorPalette() {
     brownArray = [
         '#735438',
@@ -23,7 +22,6 @@ function brownColorPalette() {
         '#6B1B05'
     ] 
     var color = brownArray[Math.floor(randomRange(0,brownArray.length-1))]
-    // console.log(color)
     return color
 }
 

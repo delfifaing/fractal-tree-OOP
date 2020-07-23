@@ -5,11 +5,15 @@ p5.disableFriendlyErrors = true;
 var tree;
 var leaves = [];
 var count = 0;
-var trunkLength = randomRange(50,200);
+var trunkLength = randomRange(50,100);
 var trunkColor = brownColorPalette();
 var trunkhWidth = randomRange(3,10);
 var angleVariation = randomAngleDeg2Rad(10,40);
-var fractalLevel = Math.floor(randomRange(1,10));
+var maxFractalLevel = Math.floor(randomRange(1,10));
+
+var leafLevel = 2;
+var leafColor = greenColorPalette();
+var leafDensity = 5;
 
 var lengthSlider;
 var angleSlider;
@@ -19,19 +23,18 @@ function setup() {
     
     createCanvas(window.innerWidth, window.innerHeight);
     
-    
 
-    lengthSlider = createSlider(50, 200, trunkLength);
+    lengthSlider = createSlider(50, 100, trunkLength);
     lengthSlider.input(updateBranches);
 
     angleSlider = createSlider(20*Math.PI/180, 90*Math.PI/180, angleVariation,0);
     angleSlider.input(updateAngles);    
 
-    levelSlider = createSlider(1, 5, fractalLevel);
-    levelSlider.input(updatelLevel);    
+    levelSlider = createSlider(0, 7, maxFractalLevel);
+    levelSlider.input(updateMaxLevel);    
     
     
-    growButton = createButton('Grow tree');
+    randomTreebutton = createButton('Random Tree');
     // growButton.mousePressed(tree.grow);
 
     var startPoint = createVector(width / 2, height);
@@ -47,8 +50,9 @@ function updateAngles() {
     tree.root.run(branch => branch.updateBranchAngle());
 }
 
-function updatelLevel() {
-    tree.root.updateFractalLevel(levelSlider.value());
+function updateMaxLevel() {
+    tree.root.run(branch => branch.updateFractalLevel(levelSlider.value()));
+    // tree.root.updateFractalLevel(levelSlider.value());
 }
 
 function draw() {

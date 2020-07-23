@@ -3,7 +3,7 @@
 // Each branch is defined by the formulas: x =  begin.x + branchLength * cos(angle), y = begin.y + branchLength * sin(angle)
 class Branch{
 
-    constructor(begin, branchLength, angle, angleVar, color, branchWidth, parent) {
+    constructor(begin, branchLength, angle, angleVar, color, branchWidth, parent, maxFractalLevel, leafLevel, leafColors, leafDensity, leafSize) {
         // Starting point of the branch
         this.begin = begin;
         // Lenght of the branch
@@ -15,22 +15,27 @@ class Branch{
         this.color = color;
         this.branchWidth = branchWidth;
         this.parent = parent;
+        this.maxFractalLevel = maxFractalLevel;
+
+        this.leafLevel = leafLevel;
+        this.leafColors = leafColors;
+        this.leafDenstiy = leafDensity;
+        this.leafSize = leafSize,
+
         // End point (calculated with the begin point, the branchLength and the angle)
         this.end = createVector(this.begin.x + this.branchLength * cos(this.angle), this.begin.y - this.branchLength * sin(this.angle));
-        
     }
-
-    // FIX! Doesn't work
-    computeEnd() {
-        if(this.begin && this.branchLength) {
-            this.end = createVector(this.begin.x + this.branchLength * cos(this.angle), this.begin.y - this.branchLength * sin(this.angle));
-        }
-    }
-    // 
+    
     show() {
+        // Display branches
         stroke(this.color);
         strokeWeight(this.branchWidth);
         line(this.begin.x, this.begin.y, this.end.x, this.end.y);
+
+        // Display leaves for every object in the this.leaf array
+        if (this.leaf) {
+            this.leaf.forEach(leaf => leaf.show());
+        }
     }
 
     // Grow branch objects
@@ -58,18 +63,23 @@ class Branch{
         
 
         // New branch will start at the beginning of the old branch
-        var newBranch = new Branch(this.end, newLength, newAngle, this.angleVar, this.color, newWidth, this);
+        var newBranch = new Branch(this.end, newLength, newAngle, this.angleVar, this.color, newWidth, this, this.maxFractalLevel, leafLevel);
         return newBranch;
 
     }
 
-    branch(limit, level) {
+    branch(level) {
+
         var branches = []; 
         this.level = level;
         
-        if (limit <= level) {
+        // Add leaves
+        this.addLeaves(this.maxFractalLevel) 
+        
+        if (this.maxFractalLevel < level) {
             return branches;
         }
+
         let left  = this.grow("left");
         let right = this.grow("right");
         
@@ -77,14 +87,26 @@ class Branch{
         right.direction = "right";
 
         branches.push(left, right);
-        left.branch(limit, level + 1)
-        right.branch(limit, level + 1)
-    
-        this.branches = branches;
+        left.branch(this.level + 1)
+        right.branch(this.level + 1)
 
+        this.branches = branches;
+        
     }
 
-    // Run functions for each element in the array
+    addLeaves() {
+        // this.computeEnd();
+        if (this.level >= this.leafLevel) {
+            var leaves = []
+            for (var i = 0; i < leafDensity; i++) {
+                var varx = randomRange(-5,5);
+                var vary = randomRange(-5,5);
+                leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, greenColorPalette()))
+            }
+            this.leaf = leaves;
+        }
+    }
+    // Run functions for each element in the this.branches array
     run(callback) {
         callback(this);
         if(this.branches && this.branches.length) {
@@ -92,43 +114,57 @@ class Branch{
         }
     }
 
+    computeEnd() {
+        if(this.begin) {
+            this.end = createVector(this.begin.x + this.branchLength * cos(this.angle), this.begin.y - this.branchLength * sin(this.angle));
+        }
+    }
 
     updateStartPoints() {
         if(this.parent) {
             this.begin.x = this.parent.end.x;
             this.begin.y = this.parent.end.y;
         }
-        
-        
+    
     };
 
     updateBranchLength() {
         this.updateStartPoints()
         this.branchLength = lengthSlider.value();
         this.computeEnd();
-        // this.end = createVector(this.begin.x + this.branchLength * cos(this.angle), this.begin.y - this.branchLength * sin(this.angle));
-        // 
     }
-
 
     updateBranchAngle() {
         // Modify angle of all branches, but not the root
         if(this.parent) {
+        // if(this.parent && !this.branches || this.branches && this.branches.length != 1) {
+            if (this.direction == "left") {
+                this.angle = this.parent.angle + angleSlider.value();                
+            }
             
-            if (this.direction === "left") {
-                this.angle = this.parent.angle + this.angleVar + angleSlider.value();
+            if (this.direction == "right" && this.parent.direction != "left") {
+                this.angle = this.parent.angle - angleSlider.value();
             }
-            if (this.direction === "right") {
-                this.angle = this.parent.angle - this.angleVar - angleSlider.value();
-            }
-            this.computeEnd();
-            // this.end = createVector(this.begin.x + this.branchLength * cos(this.angle), this.begin.y - this.branchLength * sin(this.angle));
+            // this.angle = angleSlider.value();
+            console.log(this.direction)
             this.updateStartPoints();
+            this.computeEnd();
+            
+            
         }                      
     }
     updateFractalLevel(newLimit){
-        if (this.level < newLimit) {
-            this.branch(newLimit, this.level);
+        
+        // If the newLimit is lower, trim the branches
+        this.maxFractalLevel = newLimit;
+        if (this.level >= this.maxFractalLevel) {
+            this.branches = [];
+        // If the newLimit is higher grow more branches
+        } else if(this.level < this.maxFractalLevel) {
+            // Do it only, when there are no more branches
+            if(!this.branches || this.branches && !this.branches.length) {
+              this.branch(this.level);
+            }
         }
     }
 
