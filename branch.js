@@ -33,8 +33,8 @@ class Branch{
         line(this.begin.x, this.begin.y, this.end.x, this.end.y);
 
         // Display leaves for every object in the this.leaf array
-        if (this.leaf) {
-            this.leaf.forEach(leaf => leaf.show());
+        if (this.leaves) {
+            this.leaves.forEach(leaf => leaf.show());
         }
     }
 
@@ -103,7 +103,7 @@ class Branch{
                 var vary = randomRange(-5,5);
                 leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, greenColorPalette()))
             }
-            this.leaf = leaves;
+            this.leaves = leaves;
         }
     }
     // Run functions for each element in the this.branches array
@@ -128,11 +128,27 @@ class Branch{
     
     };
 
+    updateLeavesPositions() {
+        let endx = this.end.x;
+        let endy = this.end.y;
+        if (this.leaves) {
+            this.leaves.forEach(function(leaf) {
+                var varx = randomRange(-5,5);
+                var vary = randomRange(-5,5);
+                leaf.x = endx + varx;
+                leaf.y = endy + vary;
+            })
+        } 
+    }
+
     updateBranchLength() {
         this.updateStartPoints()
-        this.branchLength = lengthSlider.value();
+        this.branchLength = lengthSlider.value() * pow(0.8, this.level);
         this.computeEnd();
+        this.updateLeavesPositions();
+
     }
+
 
     updateBranchAngle() {
         // Modify angle of all branches, but not the root
@@ -149,7 +165,6 @@ class Branch{
             console.log(this.direction)
             this.updateStartPoints();
             this.computeEnd();
-            
             
         }                      
     }
