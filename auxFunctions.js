@@ -43,3 +43,32 @@ function greenColorPalette() {
     // console.log(color)
     return color
 }
+
+//  Returns random color from orange/autumn palette
+function orangeColorPalette() {
+    greenArray = [
+        '#BF670B',
+        '#7F4507',
+        '#FF8A0E',
+        '#402304',
+        '#F29F05',
+        '#A68112',
+        '#D95323',
+        '#D94032',
+        '#A63F03',
+        '#8C1C03',
+        '#590202',
+        '#595332',
+        '#D98E04'
+
+    ]
+    
+    var color = greenArray[Math.floor(randomRange(0,brownArray.length-1))]
+    // console.log(color)
+    return color
+}
+
+// Returns the n digit of a number (reading from right to left and starting with 0)
+function nDigit(n, number){
+    return Math.floor((number / Math.pow(10, n)) % 10);
+  }
