@@ -1,0 +1,27 @@
+/* ---------------- General fonts and texts ---------------- */
+@font-face {
+    font-family: terrain;
+    src: url("terrain.otf") format("opentype");
+}
+
+h1, h2, h3, h4, h5{
+  font-family: terrain;
+  color: white;
+}
+
+.slider{
+    font-family: terrain;
+    color: white;
+    font-size: 15px;
+    
+}
+#options-pannel{
+    position: absolute;
+    left:20px;
+    top:20px;
+    width:40%;
+    height: 40%;
+    background: "rgba(255, 255, 255, 0.3)";
+    z-index: 1000;
+   
+  }

@@ -1,22 +1,58 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- App's own CSS -->
+  <link rel="stylesheet" href = "style.css" >
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+  <!-- p5 library -->
   <script language="javascript" type="text/javascript" src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.min.js"></script>
-  <!-- uncomment lines below to include extra p5 libraries -->
   
-  <!-- <script language="javascript" src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/addons/p5.sound.min.js"></script> -->
+  <!-- App's own js -->
   <script language="javascript" type="text/javascript" src="auxFunctions.js"></script>
-  
   <script language="javascript" type="text/javascript" src="branch.js"></script>
   <script language="javascript" type="text/javascript" src="tree.js"></script>
   <script language="javascript" type="text/javascript" src="leaves.js"></script>
   <script language="javascript" type="text/javascript" src="sketch.js"></script>
-  
-
   <!-- this line removes any default padding and style. you might only need one of these values set. -->
   <style> body {padding: 0; margin: 0;} </style>
+  <title>Fractal Tree</title>
 </head>
 
 <body> 
+  <div id = "canvas-div"></div>
+    <div id = "options-pannel" class = "display:inline-block">
+    <h3 id="title">CREATE YOUR OWN TREE</h3>
+    <div id="length-option"><h5> Trunk Length (px) </h5>
+      <div id="length-slider"></div>
+      <div class="slider" id="length-slider-value"></div>
+    </div>
+    <div id="level-option"><h5> Fractal Levels </h5>
+      <div id="level-slider"></div>
+      <div class="slider" id="level-slider-value"></div>
+    </div>
+    <div id="angle-option"><h5> Angle Variation (rad) </h5>
+      <div id="angle-slider"></div>
+      <div class="slider" id="angle-slider-value"></div>
+    </div>
+    <div id="season-option"><h5> Season </h5>
+      <div id="season-dropdown"></div>
+      <div class="dropdown" id="season-dropdown-value"></div>
+    </div>
+    <div id="leaf-size-option"><h5> Leaf Size </h5>
+      <div id="leaf-size-dropdown"></div>
+      <div class="dropdown" id="leaf-size-dropdown-value"></div>
+    </div>
+  </div>
 </body>
 </html>

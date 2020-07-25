@@ -2,7 +2,7 @@
 // Each branch is defined by the formulas: x =  begin.x + branchLength * cos(angle), y = begin.y + branchLength * sin(angle)
 class Branch{
 
-    constructor(begin, branchLength, angle, angleVar, color, branchWidth, parent, maxFractalLevel, leafLevel, leafColor, leafDensity, leafSize) {
+    constructor(begin, branchLength, angle, angleVar, color, branchWidth, parent, maxFractalLevel, leafLevel, leafSeason, leafDensity, leafSize) {
         // Starting point of the branch
         this.begin = begin;
         // Lenght of the branch
@@ -17,7 +17,7 @@ class Branch{
         this.maxFractalLevel = maxFractalLevel;
 
         this.leafLevel = leafLevel;
-        this.leafColor = leafColor;
+        this.leafSeason = leafSeason;
         this.leafDensity = leafDensity;
         this.leafSize = leafSize;
 
@@ -44,8 +44,8 @@ class Branch{
         this.direction = direction;
         
         // Add some more random angle variations
-        var angleVarL = randomAngleDeg2Rad(-20,20);
-        var angleVarR = randomAngleDeg2Rad(-20,20);
+        var angleVarL = randomAngleDeg2Rad(-15,20);
+        var angleVarR = randomAngleDeg2Rad(-15,20);
 
         // Rotate
         if (this.direction === "left"){
@@ -63,7 +63,7 @@ class Branch{
         
 
         // New branch will start at the beginning of the old branch
-        var newBranch = new Branch(this.end, newLength, newAngle, this.angleVar, this.color, newWidth, this, this.maxFractalLevel, this.leafLevel, this.leafColor, this.leafDensity, this.leafSize);
+        var newBranch = new Branch(this.end, newLength, newAngle, this.angleVar, this.color, newWidth, this, this.maxFractalLevel, this.leafLevel, this.leafSeason, this.leafDensity, this.leafSize);
         return newBranch;
 
     }
@@ -98,18 +98,20 @@ class Branch{
         if (this.level >= this.leafLevel) {
             var leaves = []
             for (var i = 0; i < this.leafDensity; i++) {
-                var variation = 1 + 10*nDigit(1,this.leafDensity)+2;
+                var variation = 2*this.leafDensity;
                 var varx = randomRange(-variation,variation);
                 var vary = randomRange(-variation,variation);
-                if (this.leafColor == arrayColors[0]) {
+                if (this.leafSeason == arraySeasons[0]) {
                     leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, greenColorPalette(),this.leafSize));
-                } else if (this.leafColor == arrayColors[1]) {
+                } else if (this.leafSeason == arraySeasons[1]) {
                     leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, orangeColorPalette(), this.leafSize));
+                } else if (this.leafSeason == arraySeasons[3]) {
+                    leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, greenColorPalette(), this.leafSize));
+                } else if  (this.leafSeason == arraySeasons[2]) {
+                    leaves = [];
                 }
-                
-            }
             this.leaves = leaves;
-            
+            }
         }
     }
     // Run functions for each element in the this.branches array
@@ -141,7 +143,7 @@ class Branch{
         
         if (this.leaves) {
             this.leaves.forEach(function(leaf) {
-                var variation = 1 + 10*nDigit(1,density)+4;
+                var variation = density*2;
                 var varx = randomRange(-variation,variation);
                 var vary = randomRange(-variation,variation);
                 leaf.x = endx + varx;
@@ -190,6 +192,7 @@ class Branch{
             }
         }
     }
+
 
 }
 

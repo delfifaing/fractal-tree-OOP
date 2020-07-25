@@ -17,7 +17,7 @@ class Leaf{;
         } else if (this.leafSize == arrayLeaf[1]) {
             arc(this.x, this.y, 5, 10, 0 + 5, PI + 5);
         } else if(this.leafSize == arrayLeaf[2]) {
-            arc(this.x, this.y, 5, 20, 0 + 5, PI + 5);
+            arc(this.x, this.y, 10, 10, 0+22 , PI + 21);
         }
         
         // strokeCap(ROUND);
