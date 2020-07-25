@@ -20,9 +20,10 @@
   
   <!-- App's own js -->
   <script language="javascript" type="text/javascript" src="auxFunctions.js"></script>
+  <script language="javascript" type="text/javascript" src="leaf.js"></script>
+  <script language="javascript" type="text/javascript" src="flower.js"></script>
   <script language="javascript" type="text/javascript" src="branch.js"></script>
   <script language="javascript" type="text/javascript" src="tree.js"></script>
-  <script language="javascript" type="text/javascript" src="leaves.js"></script>
   <script language="javascript" type="text/javascript" src="sketch.js"></script>
   <!-- this line removes any default padding and style. you might only need one of these values set. -->
   <style> body {padding: 0; margin: 0;} </style>
@@ -36,6 +37,10 @@
     <div id="length-option"><h5> Trunk Length (px) </h5>
       <div id="length-slider"></div>
       <div class="slider" id="length-slider-value"></div>
+    </div>
+    <div id="length-ratio-option"><h5> Branch Length Variability </h5>
+      <div id="length-ratio-slider"></div>
+      <div class="slider" id="length-ratio-value"></div>
     </div>
     <div id="level-option"><h5> Fractal Levels </h5>
       <div id="level-slider"></div>
@@ -56,3 +61,5 @@
   </div>
 </body>
 </html>
+
+  

@@ -1,5 +1,4 @@
-// Leaf class
-class Leaf{;
+class Leaf{
     constructor(x, y, color, leafSize) {
         this.x = x;
         this.y = y;

@@ -2,11 +2,13 @@
 // Each branch is defined by the formulas: x =  begin.x + branchLength * cos(angle), y = begin.y + branchLength * sin(angle)
 class Branch{
 
-    constructor(begin, branchLength, angle, angleVar, color, branchWidth, parent, maxFractalLevel, leafLevel, leafSeason, leafDensity, leafSize) {
+    constructor(begin, branchLength, lengthRatio, angle, angleVar, color, branchWidth, parent, maxFractalLevel, leafLevel, leafSeason, leafDensity, leafSize) {
         // Starting point of the branch
         this.begin = begin;
         // Lenght of the branch
         this.branchLength = branchLength;
+        // Ratio between branches' lengths
+        this.lengthRatio = lengthRatio;
         // Angle of the branch
         this.angle = angle;
         // Angle variation added in each level
@@ -36,6 +38,9 @@ class Branch{
         if (this.leaves) {
             this.leaves.forEach(leaf => leaf.show());
         }
+        if (this.flowers) {
+            this.flowers.forEach(flower => flower.show());
+        }
     }
 
     // Grow branch objects
@@ -56,14 +61,14 @@ class Branch{
             // var newIdentifier =   this.identifier + 2;
         }
         // Shorthen branch length
-        var newLength = this.branchLength * 0.8;
+        var newLength = this.branchLength * this.lengthRatio;
 
         // Decrease width in every branch
         var newWidth = this.branchWidth * 0.65;
         
 
         // New branch will start at the beginning of the old branch
-        var newBranch = new Branch(this.end, newLength, newAngle, this.angleVar, this.color, newWidth, this, this.maxFractalLevel, this.leafLevel, this.leafSeason, this.leafDensity, this.leafSize);
+        var newBranch = new Branch(this.end, newLength, this.lengthRatio, newAngle, this.angleVar, this.color, newWidth, this, this.maxFractalLevel, this.leafLevel, this.leafSeason, this.leafDensity, this.leafSize);
         return newBranch;
 
     }
@@ -73,9 +78,9 @@ class Branch{
         var branches = []; 
         this.level = level;
         
-        // Add leaves
+        this.addFlowers();
         this.addLeaves(this.maxFractalLevel) 
-        
+
         if (this.maxFractalLevel < level) {
             return branches;
         }
@@ -114,6 +119,24 @@ class Branch{
             }
         }
     }
+
+    addFlowers() {
+        var flowers = [];
+        if (this.leafSeason == arraySeasons[3]) {
+            this.leafDensity = 2;
+        
+            let width = randomRange(0,30);
+            let height = randomRange(0,10);
+            let color = flowerColorPalette();
+    
+            if(this.level == this.maxFractalLevel + 1 || this.level == this.maxFractalLevel ) {
+                let petals = randomRange(2,6);
+            flowers.push(new Flower(this.end.x,this.end.y, width, height, color, petals));
+            } 
+        }
+            this.flowers = flowers;
+      }
+
     // Run functions for each element in the this.branches array
     run(callback) {
         callback(this);
@@ -137,10 +160,9 @@ class Branch{
     };
 
     updateLeavesPositions() {
-        var endx = this.end.x;
-        var endy = this.end.y;
-        var density = this.leafDensity;
-        
+        let endx = this.end.x;
+        let endy = this.end.y;
+        let density = this.leafDensity;
         if (this.leaves) {
             this.leaves.forEach(function(leaf) {
                 var variation = density*2;
@@ -154,10 +176,10 @@ class Branch{
 
     updateBranchLength() {
         this.updateStartPoints()
-        this.branchLength = lengthSlider.value() * pow(0.8, this.level);
+        this.branchLength = lengthSlider.value() * pow(this.lengthRatio, this.level);
         this.computeEnd();
         this.updateLeavesPositions();
-
+        this.updateFlowers();
     }
 
 
@@ -168,7 +190,7 @@ class Branch{
             if (this.direction == "left") {
                 this.angle = this.parent.angle + angleSlider.value();                
             }
-            
+    
             if (this.direction == "right" && this.parent.direction != "left") {
                 this.angle = this.parent.angle - angleSlider.value();
             }
@@ -193,6 +215,16 @@ class Branch{
         }
     }
 
+    updateFlowers() {
+        let x = this.end.x;
+        let y = this.end.y;
+        this.flowers.forEach(function(flower) {
+            flower.x = x;
+            flower.y = y;
+        });
+    }
+
+    
 
 }
 

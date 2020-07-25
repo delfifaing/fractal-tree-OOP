@@ -21,7 +21,7 @@ function brownColorPalette() {
         '#540D02',
         '#6B1B05'
     ] 
-    var color = brownArray[Math.floor(randomRange(0,brownArray.length-1))]
+    var color = brownArray[Math.floor(randomRange(0,brownArray.length))]
     return color
 }
 
@@ -39,14 +39,14 @@ function greenColorPalette() {
         '#A7D175'
     ]
     
-    var color = greenArray[Math.floor(randomRange(0,brownArray.length-1))]
+    var color = greenArray[Math.floor(randomRange(0,greenArray.length))]
     // console.log(color)
     return color
 }
 
 //  Returns random color from orange/autumn palette
 function orangeColorPalette() {
-    greenArray = [
+    orangeArray = [
         '#BF670B',
         '#7F4507',
         '#FF8A0E',
@@ -62,8 +62,25 @@ function orangeColorPalette() {
         '#D98E04'
 
     ]
+    var color = orangeArray[Math.floor(randomRange(0,orangeArray.length))]
+    return color
+}
+
+
+function flowerColorPalette() {
+    flowerColorArray = [
+        '#FF645E',
+        '#CC2C50',
+        '#73163E',
+        '#A61C41',
+        '#AB46FF',
+        '#70B5B6',
+        '#F26DB6',
+        '#FFB845'
+
+    ]
     
-    var color = greenArray[Math.floor(randomRange(0,brownArray.length-1))]
+    var color = flowerColorArray[Math.floor(randomRange(0,flowerColorArray.length))]
     // console.log(color)
     return color
 }

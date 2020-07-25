@@ -6,7 +6,10 @@ var tree;
 function initVars() {
     minLength    = 20;
     maxLength    = 150;
-    trunkLength  = randomRange(minLength,maxLength);
+    trunkLength  = randomRange(minLength, maxLength);
+    minLenRatio  = 0.6;
+    maxLenRatio  = 1;
+    lengthRatio  = randomRange(minLenRatio, maxLenRatio);
     rootAngle    = Math.PI/2;
     minAngle     = 10;
     maxAngle     = 50;
@@ -27,11 +30,7 @@ function initVars() {
     leafDensity  = Math.floor(randomRange(minDensity,maxDensity));
     arrayLeaf    = ["small", "medium","large"]
     leafSize     = arrayLeaf[Math.floor(randomRange(0,arrayLeaf.length))];
-    
-    
-    // lengthSlider;
-    // angleSlider;
-    // randomTreeButton;
+
 }
 
 function setup() {
@@ -39,10 +38,16 @@ function setup() {
     canvas = createCanvas(window.innerWidth, window.innerHeight);
     canvas.parent("canvas-div");
     
+    
     initVars();
     lengthSlider = createSlider(minLength, maxLength, randomRange(minLength,maxLength));
-    lengthSlider.input(updateBranches);
+    lengthSlider.input(updateLenghts);
     lengthSlider.parent("length-slider");
+
+    lengthRatioSlider = createSlider(minLenRatio, maxLenRatio, randomRange(minLenRatio,maxLenRatio), 0.1);
+    lengthRatioSlider.input(updateLenRatio);
+    lengthRatioSlider.parent("length-ratio-slider");
+    
 
     levelSlider = createSlider(minLevel, maxLevel, fractalLevel);
     levelSlider.input(updateMaxLevel);   
@@ -72,22 +77,36 @@ function setup() {
     randomTreeButton.mousePressed(randomTree) ;
 
     randomTree();  
-}
+} 
 
 //Generate tree with random variables 
 function randomTree() {
     // Re-initialize variables, so that they are random
-    initVars();
+    initVars();  
     var startPoint  = createVector(width / 2, height);
-    tree = new Tree(startPoint, trunkLength, rootAngle, angleVar, trunkColor, trunkhWidth, fractalLevel, leafLevel, leafSeason, leafDensity, leafSize);
+    tree = new Tree(startPoint, trunkLength, lengthRatio, rootAngle, angleVar, trunkColor, trunkhWidth, fractalLevel, leafLevel, leafSeason, leafDensity, leafSize);
+    
+    // Set sliders to to the random value to which the tree is initialzed
+    lengthSlider.value(trunkLength);
+    lengthRatioSlider.value(lengthRatio);
+    levelSlider.value(leafLevel);
+    angleSlider.value(angleVar);
     
     // Set dropdowns to the random option to which the tree is initialzed
-    dropSeason.selected(leafSeason)
-    dropLeafSize.selected(leafSize);
+    dropSeason.selected(leafSeason);
+    dropLeafSize.selected(leafSize);   
+    
+    
 };
 
 // ----- Functions to modify parameters acording to sliders/dropdowns -----
-function updateBranches() {
+function updateLenghts() {
+    tree.root.run(branch => branch.updateBranchLength());
+}
+
+// Change ratio between each branch and its parent branch
+function updateLenRatio(){
+    tree.root.run(branch => branch.lengthRatio = lengthRatioSlider.value());
     tree.root.run(branch => branch.updateBranchLength());
 }
 
@@ -102,6 +121,13 @@ function updateMaxLevel() {
 function updateSeason() {
     tree.root.run(branch => branch.leafSeason = dropSeason.value());
     tree.root.run(branch => branch.addLeaves());
+    // If spring, add flowers
+    if (dropSeason.value() == arraySeasons[3]) {
+        tree.root.run(branch => branch.addFlowers());
+    }
+    else {
+        tree.root.run(branch => branch.flowers = []);
+    }
 }
 
 function updateLeafSize() {
@@ -112,10 +138,12 @@ function updateLeafSize() {
 
 function draw() {
 
-    // Set sliders to the random value to which the tree is initialzed
+    // Set sliders values to the actual value
     document.getElementById("length-slider-value").innerHTML = lengthSlider.value();
-    document.getElementById("level-slider-value").innerHTML = levelSlider.value();
+    document.getElementById("length-ratio-value").innerHTML = lengthRatioSlider.value().toFixed(2);
     document.getElementById("angle-slider-value").innerHTML = angleSlider.value().toFixed(2);
+    document.getElementById("level-slider-value").innerHTML = levelSlider.value();
+    
     
 
     clear();
