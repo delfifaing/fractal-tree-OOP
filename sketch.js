@@ -71,12 +71,6 @@ function setup() {
     randomTreeButton = createButton('Create random tree');
     randomTreeButton.mousePressed(randomTree) ;
 
-    // Init first tree in summer, and small leaves (so that they match the dropdowns)
-    // leafSeason = arraySeasons[0];
-    // leafSize   = arrayLeaf[0];
-    // var startPoint  = createVector(width / 2, height);
-    // tree = new Tree(startPoint, trunkLength, rootAngle, angleVar, trunkColor, trunkhWidth, fractalLevel, leafLevel, leafSeason, leafDensity, leafSize);
-    // 
     randomTree();  
 }
 
@@ -86,6 +80,8 @@ function randomTree() {
     initVars();
     var startPoint  = createVector(width / 2, height);
     tree = new Tree(startPoint, trunkLength, rootAngle, angleVar, trunkColor, trunkhWidth, fractalLevel, leafLevel, leafSeason, leafDensity, leafSize);
+    
+    // Set dropdowns to the random option to which the tree is initialzed
     dropSeason.selected(leafSeason)
     dropLeafSize.selected(leafSize);
 };
@@ -120,7 +116,6 @@ function draw() {
     document.getElementById("length-slider-value").innerHTML = lengthSlider.value();
     document.getElementById("level-slider-value").innerHTML = levelSlider.value();
     document.getElementById("angle-slider-value").innerHTML = angleSlider.value().toFixed(2);
-    // Set dropdowns to the random option to which the tree is initialzed
     
 
     clear();
