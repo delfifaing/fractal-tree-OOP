@@ -10,14 +10,17 @@ function initVars() {
     minLenRatio  = 0.6;
     maxLenRatio  = 1;
     lengthRatio  = randomRange(minLenRatio, maxLenRatio);
+    minWidth     = 3;
+    maxWidth     = 15;
+    trunkWidth  = randomRange(minWidth,maxWidth);
+    minWidthRatio  = 0.4;
+    maxWidthRatio  = 1;
+    branchWidthRatio = randomRange(minWidthRatio,maxWidthRatio);
     rootAngle    = Math.PI/2;
     minAngle     = 10;
     maxAngle     = 50;
     angleVar     = randomAngleDeg2Rad(minAngle,maxAngle);
     trunkColor   = brownColorPalette();
-    minWidth     = 3;
-    maxWidth     = 12;
-    trunkhWidth  = randomRange(minWidth,maxWidth);
     minLevel     = 1;
     maxLevel     = 7;
     fractalLevel = Math.floor(randomRange(minLevel,maxLevel));
@@ -44,10 +47,18 @@ function setup() {
     lengthSlider.input(updateLenghts);
     lengthSlider.parent("length-slider");
 
-    lengthRatioSlider = createSlider(minLenRatio, maxLenRatio, randomRange(minLenRatio,maxLenRatio), 0.1);
+    lengthRatioSlider = createSlider(minLenRatio, maxLenRatio, randomRange(minLenRatio,maxLenRatio), 0.01);
     lengthRatioSlider.input(updateLenRatio);
     lengthRatioSlider.parent("length-ratio-slider");
     
+    widthSlider = createSlider(minWidth, maxWidth, randomRange(minWidth,maxWidth), 0.01);
+    widthSlider.input(updateWidth);
+    widthSlider.parent("width-slider");
+
+    widthRatioSlider = createSlider(minWidthRatio, maxWidthRatio, randomRange(minWidthRatio,maxWidthRatio), 0.01);
+    widthRatioSlider.input(updateWidthRatio);
+    widthRatioSlider.parent("width-ratio-slider");
+
 
     levelSlider = createSlider(minLevel, maxLevel, fractalLevel);
     levelSlider.input(updateMaxLevel);   
@@ -84,11 +95,13 @@ function randomTree() {
     // Re-initialize variables, so that they are random
     initVars();  
     var startPoint  = createVector(width / 2, height);
-    tree = new Tree(startPoint, trunkLength, lengthRatio, rootAngle, angleVar, trunkColor, trunkhWidth, fractalLevel, leafLevel, leafSeason, leafDensity, leafSize);
+    tree = new Tree(startPoint, trunkLength, lengthRatio, rootAngle, angleVar, trunkColor, trunkWidth, branchWidthRatio, fractalLevel, leafLevel, leafSeason, leafDensity, leafSize);
     
     // Set sliders to to the random value to which the tree is initialzed
     lengthSlider.value(trunkLength);
     lengthRatioSlider.value(lengthRatio);
+    widthSlider.value(trunkWidth)
+    widthRatioSlider.value(branchWidthRatio)
     levelSlider.value(leafLevel);
     angleSlider.value(angleVar);
     
@@ -108,6 +121,15 @@ function updateLenghts() {
 function updateLenRatio(){
     tree.root.run(branch => branch.lengthRatio = lengthRatioSlider.value());
     tree.root.run(branch => branch.updateBranchLength());
+}
+
+function updateWidth() {
+    tree.root.run(branch => branch.updateBranchWidth());
+}
+
+function updateWidthRatio() {
+    tree.root.run(branch => branch.branchWidthRatio = widthRatioSlider.value());
+    tree.root.run(branch => branch.updateBranchWidth());
 }
 
 function updateAngles() {
@@ -141,6 +163,8 @@ function draw() {
     // Set sliders values to the actual value
     document.getElementById("length-slider-value").innerHTML = lengthSlider.value();
     document.getElementById("length-ratio-value").innerHTML = lengthRatioSlider.value().toFixed(2);
+    document.getElementById("width-value").innerHTML = widthSlider.value();
+    document.getElementById("width-ratio-value").innerHTML = widthRatioSlider.value().toFixed(2);
     document.getElementById("angle-slider-value").innerHTML = angleSlider.value().toFixed(2);
     document.getElementById("level-slider-value").innerHTML = levelSlider.value();
     

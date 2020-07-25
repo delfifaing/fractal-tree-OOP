@@ -2,7 +2,7 @@
 // Each branch is defined by the formulas: x =  begin.x + branchLength * cos(angle), y = begin.y + branchLength * sin(angle)
 class Branch{
 
-    constructor(begin, branchLength, lengthRatio, angle, angleVar, color, branchWidth, parent, maxFractalLevel, leafLevel, leafSeason, leafDensity, leafSize) {
+    constructor(begin, branchLength, lengthRatio, angle, angleVar, color, branchWidth, branchWidthRatio, parent, maxFractalLevel, leafLevel, leafSeason, leafDensity, leafSize) {
         // Starting point of the branch
         this.begin = begin;
         // Lenght of the branch
@@ -15,6 +15,7 @@ class Branch{
         this.angleVar = angleVar;
         this.color = color;
         this.branchWidth = branchWidth;
+        this.branchWidthRatio = branchWidthRatio;
         this.parent = parent;
         this.maxFractalLevel = maxFractalLevel;
 
@@ -64,11 +65,11 @@ class Branch{
         var newLength = this.branchLength * this.lengthRatio;
 
         // Decrease width in every branch
-        var newWidth = this.branchWidth * 0.65;
+        var newWidth = this.branchWidth * branchWidthRatio;
         
 
         // New branch will start at the beginning of the old branch
-        var newBranch = new Branch(this.end, newLength, this.lengthRatio, newAngle, this.angleVar, this.color, newWidth, this, this.maxFractalLevel, this.leafLevel, this.leafSeason, this.leafDensity, this.leafSize);
+        var newBranch = new Branch(this.end, newLength, this.lengthRatio, newAngle, this.angleVar, this.color, newWidth, this.branchWidthRatio, this, this.maxFractalLevel, this.leafLevel, this.leafSeason, this.leafDensity, this.leafSize);
         return newBranch;
 
     }
@@ -180,6 +181,10 @@ class Branch{
         this.computeEnd();
         this.updateLeavesPositions();
         this.updateFlowers();
+    }
+    updateBranchWidth() {
+        this.branchWidth = widthSlider.value() * pow(this.branchWidthRatio, this.level);
+
     }
 
 

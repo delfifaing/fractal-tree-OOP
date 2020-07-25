@@ -1,6 +1,6 @@
 class Tree {
     
-    constructor(begin, rootLength, lengthRatio, rootAngle, angleVar, color, rootWidth, maxFractalLevel, leafLevel, leafSeason, leafDensity, leafSize) {
+    constructor(begin, rootLength, lengthRatio, rootAngle, angleVar, color, rootWidth, branchWidthRatio, maxFractalLevel, leafLevel, leafSeason, leafDensity, leafSize) {
                  
         this.begin = begin;
         this.rootLength = rootLength;
@@ -9,6 +9,7 @@ class Tree {
         this.angleVar  = angleVar
         this.color = color;
         this.rootWidth = rootWidth;
+        this.branchWidthRatio = branchWidthRatio;
         this.maxFractalLevel = maxFractalLevel;
         this.leafLevel = leafLevel;
         this.leafSeason = leafSeason;
@@ -21,7 +22,7 @@ class Tree {
     }
 
     initRoot() {
-        this.root = new Branch(this.begin, this.rootLength, this.lengthRatio, this.rootAngle, this.angleVar, this.color, this.rootWidth, null, this.maxFractalLevel, this.leafLevel, this.leafSeason, this.leafDensity, this.leafSize);
+        this.root = new Branch(this.begin, this.rootLength, this.lengthRatio, this.rootAngle, this.angleVar, this.color, this.rootWidth, branchWidthRatio, null, this.maxFractalLevel, this.leafLevel, this.leafSeason, this.leafDensity, this.leafSize);
     }
     
     createBranches() {
