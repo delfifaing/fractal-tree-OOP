@@ -36,7 +36,7 @@ class Branch{
         line(this.begin.x, this.begin.y, this.end.x, this.end.y);
 
         // Display leaves for every object in the this.leaf array
-        if (this.leaves) {
+        if (this.leaves && this.leaves.length != 0) {
             this.leaves.forEach(leaf => leaf.show());
         }
         if (this.flowers) {
@@ -108,11 +108,11 @@ class Branch{
                 var varx = randomRange(-variation,variation);
                 var vary = randomRange(-variation,variation);
                 if (this.leafSeason == arraySeasons[0]) {
-                    leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, greenColorPalette(),this.leafSize));
+                    leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, greenColorPalette(),this.leafSize, false));
                 } else if (this.leafSeason == arraySeasons[1]) {
-                    leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, orangeColorPalette(), this.leafSize));
+                    leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, orangeColorPalette(), this.leafSize, true));
                 } else if (this.leafSeason == arraySeasons[3]) {
-                    leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, greenColorPalette(), this.leafSize));
+                    leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, greenColorPalette(), this.leafSize, false));
                 } else if  (this.leafSeason == arraySeasons[2]) {
                     leaves = [];
                 }
@@ -229,7 +229,10 @@ class Branch{
         });
     }
 
-    
-
+    // fallingLeaves() {
+        // let fallTrue = Math.round(randomRange(1,20));
+        // if (fallTrue == 1 && this.leaves && this.branch.level == this.maxFractalLevel-1) {   
+            // this.leaves.forEach(leaf => leaf.fall = true);
+        // }
+    // }
 }
-

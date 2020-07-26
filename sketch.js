@@ -143,7 +143,10 @@ function updateMaxLevel() {
 function updateSeason() {
     tree.root.run(branch => branch.leafSeason = dropSeason.value());
     tree.root.run(branch => branch.addLeaves());
+    // if (dropSeason.value == arraySeasons[1]) {
+        // tree.root.run(branch => branch.fallingLeaves());
     // If spring, add flowers
+    // }else 
     if (dropSeason.value() == arraySeasons[3]) {
         tree.root.run(branch => branch.addFlowers());
     }
