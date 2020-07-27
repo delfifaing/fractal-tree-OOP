@@ -33,8 +33,12 @@ class Leaf{
     fallDown() {
         // while(this.y > 0) {
         for(var i=0; i<5;i++){
-            this.y = this.y + 0.3;
-            this.x += randomRange(-0.3,0.3);
+            if (this.y<innerHeight) {
+                this.y = this.y + 0.3;
+                this.x += randomRange(-0.3,0.3);
+            }
+            
+            
         }
     }
 

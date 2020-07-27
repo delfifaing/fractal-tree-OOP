@@ -110,11 +110,12 @@ class Branch{
                 if (this.leafSeason == arraySeasons[0]) {
                     leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, greenColorPalette(),this.leafSize, false));
                 } else if (this.leafSeason == arraySeasons[1]) {
-                    leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, orangeColorPalette(), this.leafSize, true));
+                    leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, orangeColorPalette(), this.leafSize, false));
                 } else if (this.leafSeason == arraySeasons[3]) {
                     leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, greenColorPalette(), this.leafSize, false));
                 } else if  (this.leafSeason == arraySeasons[2]) {
-                    leaves = [];
+                    leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, orangeColorPalette(), this.leafSize, true));
+                    // leaves = [];
                 }
             this.leaves = leaves;
             }

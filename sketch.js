@@ -14,7 +14,7 @@ function initVars() {
     maxWidth     = 15;
     trunkWidth  = randomRange(minWidth,maxWidth);
     minWidthRatio  = 0.4;
-    maxWidthRatio  = 1;
+    maxWidthRatio  = 0.8;
     branchWidthRatio = randomRange(minWidthRatio,maxWidthRatio);
     rootAngle    = Math.PI/2;
     minAngle     = 10;
@@ -24,7 +24,6 @@ function initVars() {
     minLevel     = 1;
     maxLevel     = 7;
     fractalLevel = Math.floor(randomRange(minLevel,maxLevel));
-    // var fractalLevel = 4;
     leafLevel    = 2;
     arraySeasons = ["Summer", "Autumn", "Winter", "Spring"]
     leafSeason   = arraySeasons[Math.floor(randomRange(0,arraySeasons.length))];
@@ -86,6 +85,7 @@ function setup() {
 
     randomTreeButton = createButton('Create random tree');
     randomTreeButton.mousePressed(randomTree) ;
+    randomTreeButton.parent("tree-button"); 
 
     randomTree();  
 } 
