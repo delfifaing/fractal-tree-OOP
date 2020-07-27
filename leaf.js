@@ -1,10 +1,11 @@
 class Leaf{
-    constructor(x, y, color, leafSize) {
+    constructor(x, y, color, leafSize, fall) {
         this.x = x;
         this.y = y;
         this.leafDensity = leafDensity
         this.color = color;
         this.leafSize = leafSize;
+        this.fall = fall;
 
     }
 
@@ -24,6 +25,21 @@ class Leaf{
         // strokeWeight(2);
         // noStroke();
         // fill(0);
+        if (this.fall == true){
+            this.fallDown();
+        }
+    }
+
+    fallDown() {
+        // while(this.y > 0) {
+        for(var i=0; i<5;i++){
+            if (this.y<innerHeight) {
+                this.y = this.y + 0.3;
+                this.x += randomRange(-0.3,0.3);
+            }
+            
+            
+        }
     }
 
 }
