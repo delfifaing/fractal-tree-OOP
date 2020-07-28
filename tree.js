@@ -16,13 +16,13 @@ class Tree {
         this.leafDensity = leafDensity;
         this.leafSize = leafSize;
         this.end = createVector(this.begin.x, this.begin.y - this.rootLength);
-        
+        this.removed = false;
 
         this.generateTree();
     }
 
     initRoot() {
-        this.root = new Branch(this.begin, this.rootLength, this.lengthRatio, this.rootAngle, this.angleVar, this.color, this.rootWidth, branchWidthRatio, null, this.maxFractalLevel, this.leafLevel, this.leafSeason, this.leafDensity, this.leafSize);
+        this.root = new Branch(this.begin, this.rootLength, this.lengthRatio, this.rootAngle, this.angleVar, this.color, this.rootWidth, branchWidthRatio, null, this.maxFractalLevel, this.leafLevel, this.leafSeason, this.leafDensity, this.leafSize, this.removed);
     }
     
     createBranches() {

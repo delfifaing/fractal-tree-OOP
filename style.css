@@ -39,3 +39,11 @@ h1, h2, h3, h4, h5{
     z-index: 2;
 
   }
+
+  #remove-button{
+    position: absolute;
+    right: 50px;
+    top: 120px;
+    align-content: right;
+    z-index: 2;
+  }

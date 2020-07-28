@@ -86,7 +86,11 @@ function setup() {
     randomTreeButton = createButton('Create random tree');
     randomTreeButton.mousePressed(randomTree) ;
     randomTreeButton.parent("tree-button"); 
-
+    
+    removeButton = createButton('Remove leaves/flowers');
+    removeButton.mousePressed(removeLeavesFlowers) ;
+    removeButton.parent("remove-button"); 
+    
     randomTree();  
 } 
 
@@ -102,7 +106,7 @@ function randomTree() {
     lengthRatioSlider.value(lengthRatio);
     widthSlider.value(trunkWidth)
     widthRatioSlider.value(branchWidthRatio)
-    levelSlider.value(leafLevel);
+    levelSlider.value(fractalLevel+1);
     angleSlider.value(angleVar);
     
     // Set dropdowns to the random option to which the tree is initialzed
@@ -141,18 +145,17 @@ function updateMaxLevel() {
 }
 
 function updateSeason() {
+    tree.root.run(branch => branch.removed = false);
+    removeButton.html("Remove leaves/flowers");
     tree.root.run(branch => branch.leafSeason = dropSeason.value());
     tree.root.run(branch => branch.addLeaves());
-    // if (dropSeason.value == arraySeasons[1]) {
-        // tree.root.run(branch => branch.fallingLeaves());
-    // If spring, add flowers
-    // }else 
     if (dropSeason.value() == arraySeasons[3]) {
         tree.root.run(branch => branch.addFlowers());
     }
     else {
         tree.root.run(branch => branch.flowers = []);
     }
+    
 }
 
 function updateLeafSize() {
@@ -160,6 +163,9 @@ function updateLeafSize() {
     tree.root.run(branch => branch.addLeaves());
 }
 
+function removeLeavesFlowers(){
+    tree.root.run(branch => branch.remove());
+}
 
 function draw() {
 
@@ -175,14 +181,6 @@ function draw() {
 
     clear();
     background('black');
-    // console.log(tree.root)
     tree.show();
-
-    // for (var i = 0; i < leaves.length; i++) {
-        // leaves[i].show();   
-
-    // }
-
-     
 }
     
