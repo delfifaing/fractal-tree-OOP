@@ -2,7 +2,7 @@
 // Each branch is defined by the formulas: x =  begin.x + branchLength * cos(angle), y = begin.y + branchLength * sin(angle)
 class Branch{
 
-    constructor(begin, branchLength, lengthRatio, angle, angleVar, color, branchWidth, branchWidthRatio, parent, maxFractalLevel, leafLevel, leafSeason, leafDensity, leafSize) {
+    constructor(begin, branchLength, lengthRatio, angle, angleVar, color, branchWidth, branchWidthRatio, parent, maxFractalLevel, leafLevel, leafSeason, leafDensity, leafSize, removed) {
         // Starting point of the branch
         this.begin = begin;
         // Lenght of the branch
@@ -23,6 +23,7 @@ class Branch{
         this.leafSeason = leafSeason;
         this.leafDensity = leafDensity;
         this.leafSize = leafSize;
+        this.removed = removed;
 
         // End point (calculated with the begin point, the branchLength and the angle)
         this.end = createVector(this.begin.x + this.branchLength * cos(this.angle), this.begin.y - this.branchLength * sin(this.angle));
@@ -69,7 +70,7 @@ class Branch{
         
 
         // New branch will start at the beginning of the old branch
-        var newBranch = new Branch(this.end, newLength, this.lengthRatio, newAngle, this.angleVar, this.color, newWidth, this.branchWidthRatio, this, this.maxFractalLevel, this.leafLevel, this.leafSeason, this.leafDensity, this.leafSize);
+        var newBranch = new Branch(this.end, newLength, this.lengthRatio, newAngle, this.angleVar, this.color, newWidth, this.branchWidthRatio, this, this.maxFractalLevel, this.leafLevel, this.leafSeason, this.leafDensity, this.leafSize, this.removed);
         return newBranch;
 
     }
@@ -79,9 +80,12 @@ class Branch{
         var branches = []; 
         this.level = level;
         
-        this.addFlowers();
-        this.addLeaves(this.maxFractalLevel) 
-
+        if (this.parent && this.parent.removed == false){
+            this.removed = false;
+            this.addFlowers();
+            this.addLeaves(this.maxFractalLevel) 
+        }
+            
         if (this.maxFractalLevel < level) {
             return branches;
         }
@@ -115,7 +119,6 @@ class Branch{
                     leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, greenColorPalette(), this.leafSize, false));
                 } else if  (this.leafSeason == arraySeasons[2]) {
                     leaves.push(new Leaf(this.end.x + varx, this.end.y + vary, orangeColorPalette(), this.leafSize, true));
-                    // leaves = [];
                 }
             this.leaves = leaves;
             }
@@ -131,7 +134,7 @@ class Branch{
             let height = randomRange(0,10);
             let color = flowerColorPalette();
     
-            if(this.level == this.maxFractalLevel + 1 || this.level == this.maxFractalLevel ) {
+            if(this.level == this.maxFractalLevel + 1 || this.level == this.maxFractalLevel) {
                 let petals = randomRange(2,6);
             flowers.push(new Flower(this.end.x,this.end.y, width, height, color, petals));
             } 
@@ -224,16 +227,36 @@ class Branch{
     updateFlowers() {
         let x = this.end.x;
         let y = this.end.y;
-        this.flowers.forEach(function(flower) {
-            flower.x = x;
-            flower.y = y;
-        });
+        if (this.flowers){
+            this.flowers.forEach(function(flower) {
+                flower.x = x;
+                flower.y = y;   
+            });
+        }
     }
 
-    // fallingLeaves() {
-        // let fallTrue = Math.round(randomRange(1,20));
-        // if (fallTrue == 1 && this.leaves && this.branch.level == this.maxFractalLevel-1) {   
-            // this.leaves.forEach(leaf => leaf.fall = true);
+    remove(){
+        if (this.removed == false){
+            if (this.leaves){
+                this.leaves = [];
+            }
+            if (this.flowers){
+                this.flowers = [];
+            }
+            this.removed = true;
+            removeButton.html("Add leaves/flowers")
+        }else{
+            this.addLeaves();
+            this.addFlowers();
+            this.removed = false;
+            removeButton.html("Remove leaves/flowers")
+        }
+        // 
+        // if (this.leaves) {
+            // this.leaves = [];
         // }
-    // }
+        // if (this.flowers) {
+            // this.flowers = [];
+        // }
+    }
 }
