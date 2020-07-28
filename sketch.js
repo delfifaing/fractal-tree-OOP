@@ -63,10 +63,6 @@ function setup() {
     levelSlider.input(updateMaxLevel);   
     levelSlider.parent("level-slider"); 
     
-    angleSlider = createSlider(maxAngle*Math.PI/180, maxAngle*Math.PI/180, angleVar,0);
-    angleSlider.input(updateAngles);   
-    angleSlider.parent("angle-slider"); 
-    
     dropSeason = createSelect();
     dropSeason.option(arraySeasons[0]); 
     dropSeason.option(arraySeasons[1]); 
@@ -107,7 +103,6 @@ function randomTree() {
     widthSlider.value(trunkWidth)
     widthRatioSlider.value(branchWidthRatio)
     levelSlider.value(fractalLevel+1);
-    angleSlider.value(angleVar);
     
     // Set dropdowns to the random option to which the tree is initialzed
     dropSeason.selected(leafSeason);
@@ -134,10 +129,6 @@ function updateWidth() {
 function updateWidthRatio() {
     tree.root.run(branch => branch.branchWidthRatio = widthRatioSlider.value());
     tree.root.run(branch => branch.updateBranchWidth());
-}
-
-function updateAngles() {
-    tree.root.run(branch => branch.updateBranchAngle());
 }
 
 function updateMaxLevel() {
@@ -174,7 +165,6 @@ function draw() {
     document.getElementById("length-ratio-value").innerHTML = lengthRatioSlider.value().toFixed(2);
     document.getElementById("width-value").innerHTML = widthSlider.value();
     document.getElementById("width-ratio-value").innerHTML = widthRatioSlider.value().toFixed(2);
-    document.getElementById("angle-slider-value").innerHTML = angleSlider.value().toFixed(2);
     document.getElementById("level-slider-value").innerHTML = levelSlider.value();
     
     

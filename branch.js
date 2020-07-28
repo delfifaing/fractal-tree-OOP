@@ -190,25 +190,6 @@ class Branch{
         this.branchWidth = widthSlider.value() * pow(this.branchWidthRatio, this.level);
 
     }
-
-
-    // updateBranchAngle() {
-        // Modify angle of all branches, but not the root
-        // if(this.parent) {
-        // if(this.parent && !this.branches || this.branches && this.branches.length != 1) {
-            // if (this.direction == "left") {
-                // this.angle = this.parent.angle + angleSlider.value();                
-            // }
-    // 
-            // if (this.direction == "right" && this.parent.direction != "left") {
-                // this.angle = this.parent.angle - angleSlider.value();
-            // }
-            // this.angle = angleSlider.value();
-            // this.updateStartPoints();
-            // this.computeEnd();
-            // 
-        // }                      
-    // }
     updateFractalLevel(newLimit){
         
         // If the newLimit is lower, trim the branches
