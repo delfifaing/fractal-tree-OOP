@@ -62,7 +62,8 @@ function setup() {
     levelSlider = createSlider(minLevel, maxLevel, fractalLevel);
     levelSlider.input(updateMaxLevel);   
     levelSlider.parent("level-slider"); 
-    
+    levelSlider.style('color', '#07cd97');
+
     dropSeason = createSelect();
     dropSeason.option(arraySeasons[0]); 
     dropSeason.option(arraySeasons[1]); 
@@ -86,7 +87,7 @@ function setup() {
     removeButton = createButton('Remove leaves/flowers');
     removeButton.mousePressed(removeLeavesFlowers) ;
     removeButton.parent("remove-button"); 
-    
+
     randomTree();  
 } 
 
@@ -173,4 +174,9 @@ function draw() {
     background('black');
     tree.show();
 }
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+    randomTree();
+  }
     
