@@ -149,10 +149,6 @@ function updateSeason() {
     removeButton.html("Remove leaves/flowers");
     tree.root.run(branch => branch.leafSeason = dropSeason.value());
     tree.root.run(branch => branch.addLeaves());
-    // if (dropSeason.value == arraySeasons[1]) {
-        // tree.root.run(branch => branch.fallingLeaves());
-    // If spring, add flowers
-    // }else 
     if (dropSeason.value() == arraySeasons[3]) {
         tree.root.run(branch => branch.addFlowers());
     }
@@ -185,14 +181,6 @@ function draw() {
 
     clear();
     background('black');
-    // console.log(tree.root)
     tree.show();
-
-    // for (var i = 0; i < leaves.length; i++) {
-        // leaves[i].show();   
-
-    // }
-
-     
 }
     

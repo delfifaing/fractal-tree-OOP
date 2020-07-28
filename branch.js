@@ -192,23 +192,23 @@ class Branch{
     }
 
 
-    updateBranchAngle() {
+    // updateBranchAngle() {
         // Modify angle of all branches, but not the root
-        if(this.parent) {
+        // if(this.parent) {
         // if(this.parent && !this.branches || this.branches && this.branches.length != 1) {
-            if (this.direction == "left") {
-                this.angle = this.parent.angle + angleSlider.value();                
-            }
-    
-            if (this.direction == "right" && this.parent.direction != "left") {
-                this.angle = this.parent.angle - angleSlider.value();
-            }
+            // if (this.direction == "left") {
+                // this.angle = this.parent.angle + angleSlider.value();                
+            // }
+    // 
+            // if (this.direction == "right" && this.parent.direction != "left") {
+                // this.angle = this.parent.angle - angleSlider.value();
+            // }
             // this.angle = angleSlider.value();
-            this.updateStartPoints();
-            this.computeEnd();
-            
-        }                      
-    }
+            // this.updateStartPoints();
+            // this.computeEnd();
+            // 
+        // }                      
+    // }
     updateFractalLevel(newLimit){
         
         // If the newLimit is lower, trim the branches
@@ -251,12 +251,5 @@ class Branch{
             this.removed = false;
             removeButton.html("Remove leaves/flowers")
         }
-        // 
-        // if (this.leaves) {
-            // this.leaves = [];
-        // }
-        // if (this.flowers) {
-            // this.flowers = [];
-        // }
     }
 }
