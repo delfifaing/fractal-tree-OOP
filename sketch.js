@@ -12,7 +12,7 @@ function initVars() {
     lengthRatio  = randomRange(minLenRatio, maxLenRatio);
     minWidth     = 3;
     maxWidth     = 15;
-    trunkWidth  = randomRange(minWidth,maxWidth);
+    trunkWidth   = randomRange(minWidth,maxWidth);
     minWidthRatio  = 0.4;
     maxWidthRatio  = 0.8;
     branchWidthRatio = randomRange(minWidthRatio,maxWidthRatio);
