@@ -5,6 +5,7 @@ html, body {
   /* remove the extra whites around */
   margin: 0;
   padding-left: calc(100vw - 100%);
+  background-color: black;
 }
 /* ---------------- General fonts and texts ---------------- */
 @font-face {
