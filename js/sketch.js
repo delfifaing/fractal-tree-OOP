@@ -172,8 +172,8 @@ function draw() {
     
 
     clear();
-    // background('black');
-    background('white')
+    background('black');
+    // background('white')
     tree.show();
 }
 

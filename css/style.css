@@ -4,6 +4,7 @@ html, body {
   height: 100%;
   /* remove the extra whites around */
   margin: 0;
+  padding-left: calc(100vw - 100%);
 }
 /* ---------------- General fonts and texts ---------------- */
 @font-face {
