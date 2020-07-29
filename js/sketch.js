@@ -171,14 +171,14 @@ function draw() {
     
     
 
-    // clear();
+    clear();
     // background('black');
-    // background('white')
+    background('white')
     tree.show();
 }
 
-// function windowResized() {
-    // resizeCanvas(windowWidth, windowHeight);
-    // randomTree();
-//   }
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+    randomTree();
+  }
     
