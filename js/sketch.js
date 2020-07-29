@@ -109,6 +109,8 @@ function randomTree() {
     dropSeason.selected(leafSeason);
     dropLeafSize.selected(leafSize);   
     
+    removeButton.html("Remove leaves/flowers")
+    document.getElementById("leaf-size-option").style.display = "block";
     
 };
 
@@ -173,7 +175,6 @@ function draw() {
 
     clear();
     background('black');
-    // background('white')
     tree.show();
 }
 
