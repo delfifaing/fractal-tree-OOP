@@ -226,13 +226,13 @@ class Branch{
             }
             this.removed = true;
             removeButton.html("Add leaves/flowers")
-            dropLeafSize.hide();
+            document.getElementById("leaf-size-option").style.display = "none";
         }else{
             this.addLeaves();
             this.addFlowers();
             this.removed = false;
             removeButton.html("Remove leaves/flowers")
-            dropLeafSize.show();
+            document.getElementById("leaf-size-option").style.display = "block";
         }
     }
 }

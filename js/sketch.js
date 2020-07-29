@@ -37,7 +37,7 @@ function initVars() {
 
 function setup() {
     
-    canvas = createCanvas(window.innerWidth, window.innerHeight);
+    canvas = createCanvas(windowWidth, windowHeight);
     canvas.parent("canvas-div");
     
     
@@ -139,6 +139,7 @@ function updateMaxLevel() {
 function updateSeason() {
     tree.root.run(branch => branch.removed = false);
     removeButton.html("Remove leaves/flowers");
+    document.getElementById("leaf-size-option").style.display = "block";
     tree.root.run(branch => branch.leafSeason = dropSeason.value());
     tree.root.run(branch => branch.addLeaves());
     if (dropSeason.value() == arraySeasons[3]) {
