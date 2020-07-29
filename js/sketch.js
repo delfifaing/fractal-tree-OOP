@@ -173,7 +173,7 @@ function draw() {
 
     // clear();
     // background('black');
-    background(0)
+    background('white')
     tree.show();
 }
 
