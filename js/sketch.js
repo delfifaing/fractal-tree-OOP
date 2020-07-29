@@ -176,8 +176,8 @@ function draw() {
     tree.show();
 }
 
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
-    randomTree();
-  }
+// function windowResized() {
+    // resizeCanvas(windowWidth, windowHeight);
+    // randomTree();
+//   }
     
